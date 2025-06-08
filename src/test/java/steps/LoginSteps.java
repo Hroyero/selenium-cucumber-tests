@@ -3,8 +3,10 @@ package steps;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.*;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import pages.LoginPage;
 import utils.ScreenshotUtil;
 import io.cucumber.java.Scenario;
@@ -19,8 +21,18 @@ public class LoginSteps {
 
     @Before
     public void setUp() {
-        io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        WebDriverManager.chromedriver().setup();
+
+        ChromeOptions options = new ChromeOptions();
+
+        // Si está corriendo en GitHub Actions (CI), usamos headless
+        if (System.getenv("CI") != null) {
+            options.addArguments("--headless=new");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+        }
+
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
     }
     @Given("the user opens the browser")
