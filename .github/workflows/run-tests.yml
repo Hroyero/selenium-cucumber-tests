@@ -25,3 +25,9 @@ jobs:
 
       - name: Run tests with Gradle
         run: ./gradlew test
+
+      - name: Upload Cucumber HTML Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: cucumber-report
+          path: build/reports/cucumber-html-report.html
