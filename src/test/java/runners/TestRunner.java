@@ -10,7 +10,7 @@ import io.cucumber.junit.CucumberOptions;
         glue = "steps",
         plugin = {
                 "pretty",
-                "html:build/reports/cucumber-html-report.html"
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
         },
         monochrome = true
 )
