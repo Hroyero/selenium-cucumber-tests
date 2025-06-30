@@ -11,7 +11,7 @@ public class LoginPage {
     private By passwordField = By.id("password");
     private By loginButton = By.id("login-button");
     private By productsTitle = By.className("title");
-    private By errorMessage = By.cssSelector("[data-test='error']");
+    private By errorMessage = By.cssSelector("h3[data-test='error']");
 
 
     public LoginPage(WebDriver driver) {
