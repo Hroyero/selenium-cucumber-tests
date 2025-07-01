@@ -1,3 +1,4 @@
+@regression1
 Feature: Login error validation
 
   Scenario: Empty username
