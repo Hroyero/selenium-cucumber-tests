@@ -14,7 +14,7 @@ public class CheckoutPage {
 
     public CheckoutPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
     // Locators
@@ -30,10 +30,13 @@ public class CheckoutPage {
     private By continueButton = By.id("continue");
     private By finishButton = By.id("finish");
     private By confirmationMessage = By.className("complete-header");
+    private By accountShoppingCard = By.className("shopping_cart_badge");
 
     // Actions
     public void addProductToCart(String productName) {
-        wait.until(ExpectedConditions.elementToBeClickable(addToCartButton(productName))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//div[text()='" + productName + "']/ancestor::div[@class='inventory_item']//button")
+        )).click();
     }
 
     public void goToCart() {
@@ -57,5 +60,15 @@ public class CheckoutPage {
 
     public String getConfirmationMessage() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(confirmationMessage)).getText();
+    }
+    public String getCartBadgeCount() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.className("shopping_cart_badge")
+        )).getText();
+    }
+
+    public boolean isProductInCart(String productName) {
+        //wait.until(ExpectedConditions.visibilityOfElementLocated())
+        return driver.findElement(By.xpath("//div[text()='" + productName + "']")).isDisplayed();
     }
 }

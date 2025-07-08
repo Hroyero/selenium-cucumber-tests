@@ -64,6 +64,7 @@ public class LoginSteps {
     @Then("they should see the text {string}")
     public void theyShouldSeeTheText(String expectedText) {
         assertTrue(loginPage.obtenerTextoTitulo().contains(expectedText));
+        System.out.println("Texto experado: " + expectedText );
     }
 
     @Then("they should see the error message {string}")

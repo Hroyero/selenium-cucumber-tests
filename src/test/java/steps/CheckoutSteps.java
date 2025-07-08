@@ -61,11 +61,26 @@ public class CheckoutSteps {
         checkoutPage.finishPurchase();
     }
 
+    @And("the cart should contain {string} and {string}")
+    public void theCartShouldContain(String product1, String product2) {
+        checkoutPage.goToCart();
+        assertTrue(checkoutPage.isProductInCart(product1));
+        assertTrue(checkoutPage.isProductInCart(product2));
+    }
+
+    @Then("the cart badge should show {string}")
+    public void theCartBadgeShouldShow(String expectedCount) {
+        String actualCount = checkoutPage.getCartBadgeCount();
+        assertEquals(expectedCount, actualCount);
+    }
+
+
     @Then("the user should see a confirmation message {string}")
     public void verifyConfirmation(String expectedMessage) {
         String actual = checkoutPage.getConfirmationMessage();
         assertEquals(expectedMessage, actual);
     }
+
 
     @After
     public void tearDown() {
