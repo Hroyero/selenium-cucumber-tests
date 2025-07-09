@@ -1,3 +1,4 @@
+@CheckoutFiel
 Feature: Add multiple products and verify cart account
 
 Scenario: Checkout fails with missing first name

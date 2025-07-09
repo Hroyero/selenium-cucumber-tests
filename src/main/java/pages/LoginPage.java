@@ -22,6 +22,7 @@ public class LoginPage {
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
     public String getTituloPagina() {
         return driver.getTitle();

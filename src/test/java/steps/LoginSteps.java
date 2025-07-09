@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import pages.LoginPage;
+import utils.DriverFactory;
 
 import java.io.ByteArrayInputStream;
 
@@ -26,23 +27,15 @@ public class LoginSteps {
     @Before
     public void setUp() {
         WebDriverManager.chromedriver().setup();
-
-        ChromeOptions options = new ChromeOptions();
-
-        if (System.getenv("CI") != null) {
-            options.addArguments("--headless=new");
-            options.addArguments("--no-sandbox");
-            options.addArguments("--disable-dev-shm-usage");
-        }
-
-        driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
+        driver = DriverFactory.getDriver();
     }
 
     @Given("the user opens the browser")
     public void openBrowser() {
         // browser setup is already handled in @Before
     }
+
+
 
     @When("they navigate to the SauceDemo login page")
     public void navigateToSauceDemoLoginPage() {
@@ -105,7 +98,7 @@ public class LoginSteps {
                 Allure.addAttachment("Screenshot", "image/png", new ByteArrayInputStream(screenshot), ".png");
                 Allure.step("Captura agregada al fallo");
             }
-            driver.quit();
+            DriverFactory.quitDriver();
         }
     }
 }

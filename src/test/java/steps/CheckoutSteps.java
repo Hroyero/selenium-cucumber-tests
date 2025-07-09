@@ -9,38 +9,25 @@ import io.cucumber.java.After;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import utils.DriverFactory;
+
 import static org.junit.Assert.*;
 
 public class CheckoutSteps {
 
     private WebDriver driver;
-    private LoginPage loginPage;
     private CheckoutPage checkoutPage;
 
-    @Before
-    public void setUp() {
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-
-        if (System.getenv("CI") != null) {
-            options.addArguments("--headless=new");
-            options.addArguments("--no-sandbox");
-            options.addArguments("--disable-dev-shm-usage");
-        }
-
-        driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
-    }
-
+/*
     @Given("the user is logged in with valid credentials")
     public void loginWithValidCredentials() {
         driver.get("https://www.saucedemo.com/");
-        loginPage = new LoginPage(driver);
         loginPage.ingresarCredenciales("standard_user", "secret_sauce");
-    }
+    }*/
 
     @When("the user adds the product {string} to the cart")
     public void addProductToCart(String productName) {
+        driver = DriverFactory.getDriver();
         checkoutPage = new CheckoutPage(driver);
         checkoutPage.addProductToCart(productName);
     }
@@ -81,11 +68,10 @@ public class CheckoutSteps {
         assertEquals(expectedMessage, actual);
     }
 
-
-    @After
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+    @Then("the checkout error message should be {string}")
+    public void errorMessage(String expectedMessage) {
+        String actual = checkoutPage.errorMessage();
+        assertEquals(expectedMessage, actual);
     }
+
 }

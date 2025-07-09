@@ -30,6 +30,7 @@ public class CheckoutPage {
     private By continueButton = By.id("continue");
     private By finishButton = By.id("finish");
     private By confirmationMessage = By.className("complete-header");
+    private By errorMessageText = By.xpath("//h3[@data-test='error']");
     private By accountShoppingCard = By.className("shopping_cart_badge");
 
     // Actions
@@ -61,6 +62,11 @@ public class CheckoutPage {
     public String getConfirmationMessage() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(confirmationMessage)).getText();
     }
+
+    public String errorMessage() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessageText)).getText();
+    }
+
     public String getCartBadgeCount() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.className("shopping_cart_badge")
